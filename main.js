@@ -1,12 +1,11 @@
-
-
 let inputValue = document.getElementById("toDoInput")
-
-toDoList = [];
 let isDone = false;
 let buttonText = "Done";
 let viewState = true
 
+toDoList = [];
+
+//Render
 let render = (status) => {
     viewState = status
     let filter;
@@ -16,19 +15,22 @@ let render = (status) => {
         filter = toDoList;
 
     let htmlToDoArray = filter.map((objectNum, index) => { //map can take 2 parameters: current element and its index
-        return `<li style='text-decoration:${objectNum.isDone ? "line-through" : ""}'>${objectNum.text}<button onclick="removeItem(${index})">x</button><button id="buttonText" onclick="toggleDone(${index})">${objectNum.buttontext}</button></li>`;
+        return `<li style='text-decoration:${objectNum.isDone ? "line-through" : ""}'>${objectNum.text}<button  class="btn btn-sm btn-light m-3" onclick="removeItem(${index})">Remove</button><button class="btn btn-sm btn-light" id="buttonText" onclick="toggleDone(${index})">${objectNum.buttontext}</button></li>`;
     }).join('');
     document.getElementById('resultArea').innerHTML = htmlToDoArray;
 }
 
+//Add items to the list
 let addItem = () => {
     let toDoValue = inputValue.value;
     let object = { text: toDoValue, isDone, buttontext: buttonText };
     toDoList.push(object);
+    resetInput();
     saveTodos();
     render(viewState);
 }
 
+//Remove items from the list
 let removeItem = (index) => {
     toDoList.splice(index, 1)
     console.log(toDoList);
@@ -36,6 +38,7 @@ let removeItem = (index) => {
     render(viewState);
 }
 
+//Toggle done or undo
 let toggleDone = (index) => {
     toDoList[index].isDone = !(toDoList[index].isDone)
     console.log(toDoList[index].isDone);
@@ -48,6 +51,7 @@ let toggleDone = (index) => {
     render(viewState);
 }
 
+//Filter incomplete items
 function filterDone(event) {
     return event.isDone == false;
 }
@@ -67,11 +71,10 @@ function isChecked(boo) {
     }
 }
 
-
-var siteName = "my site";
-localStorage.setItem('siteName', siteName);
-
-let appState= {};
+//reset text in input box
+function resetInput() {
+    inputValue.value=null;
+  }
 
 //save to storage
 function saveTodos(){
