@@ -9,9 +9,9 @@ let render = (status) => {
     viewState = status
     let filter;
     if (!status)
-    filter = toDoList.filter(el=> !el.isDone)
+    filter = toDoList.filter(el=> !el.isDone);
     else
-    filter = toDoList
+    filter = toDoList;
 
     let htmlToDoArray = filter.map((objectNum, index) => { //map can take 2 parameters: current element and its index
         return `<li style='text-decoration:${ objectNum.isDone  ?"line-through": ""}'>${objectNum.text}<button onclick="removeItem(${index})">x</button><button id="buttonText" onclick="toggleDone(${index})">${objectNum.buttontext}</button></li>`;
@@ -43,7 +43,7 @@ let toggleDone = (index) =>{
     }else{
         toDoList[index].buttontext = "Done";
     }
-    render();
+    render(viewState);
 }
 
 function filterDone(event){
@@ -69,3 +69,5 @@ function isChecked(boo){
         render(true);
       }
 }
+
+//if box is clicked then filter
