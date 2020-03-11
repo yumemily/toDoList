@@ -6,10 +6,9 @@ let viewState = true
 toDoList = [];
 
 //Render
-let render = (status) => {
-    viewState = status
+let render = (viewState) => {
     let filter;
-    if (!status)
+    if (!viewState)
         filter = toDoList.filter(el => !el.isDone);
     else
         filter = toDoList;
@@ -25,8 +24,8 @@ let addItem = () => {
     let toDoValue = inputValue.value;
     let object = { text: toDoValue, isDone, buttontext: buttonText };
     toDoList.push(object);
-    resetInput();
     saveTodos();
+    resetInput();
     render(viewState);
 }
 
@@ -48,13 +47,14 @@ let toggleDone = (index) => {
     } else {
         toDoList[index].buttontext = "Done";
     }
+    saveTodos();
     render(viewState);
 }
 
 //Filter incomplete items
-function filterDone(event) {
-    return event.isDone == false;
-}
+// function filterDone(event) {
+//     return event.isDone == false;
+// }
 
 // Checkbox
 let decider = document.getElementById("checkbox");
@@ -64,7 +64,7 @@ document.getElementById("checkbox").checked = false;
 
 function isChecked(boo) {
     if (decider.checked) {
-        render(false)
+        render(false);
         console.log(checked);
     } else {
         render(true);
@@ -92,4 +92,5 @@ function getTodos(){
 }
 
 getTodos();
-render();
+toggleDone
+render(viewState);
